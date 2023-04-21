@@ -1,8 +1,8 @@
 ### Blockchain-Based Proof of Location with Outlier Detection
 
-> Paper Version: CSCD94 Deliverable (2023 Apr 20)
+> Paper Version: CSCD92 Deliverable (2023 Apr 20)
 >
-> Below is the final archive for the CSCD94 course, led by Professor Thierry Sans. The goal of this document is to develop into a research paper that can be submitted to a conference.
+> Below is the final archive for the CSCD92 course, led by Professor Thierry Sans. The goal of this document is to develop into a research paper that can be submitted to a conference.
 
 We offer a decentralized and infrastructure-independent proof-of-location architecture, which consists of 
 
