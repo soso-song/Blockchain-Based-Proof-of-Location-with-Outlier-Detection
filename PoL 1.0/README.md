@@ -42,7 +42,7 @@ The peer-to-peer connections utilize short-range communication technologies like
 >
 > The paper claim that in most scenarios, users have an incentive to collect location proofs continuously, in particular, before using an application and maybe even before knowing about the application.
 >
-> One difference between our Proactive Location Proof and this paper is that our users are continuously uploading Present Claim instead of generating Location Proof, a Location Proof only be generated when user requests it.
+> One difference between our Proactive Location Proof and this paper is that our users are continuously uploading Spatiotemporal Claim instead of generating Location Proof, a Location Proof only be generated when user requests it.
 
 #### Part 1(Before Oracle) Peer to Peer:
 
@@ -60,11 +60,11 @@ Since our approach allows for an unlimited number of pseudonyms instead of using
 
 <span style="color:red;">[Example periodically changing Pseudonym, source location unobservability and pseudonym unlinkability]</span>
 
-##### Presence Claim(PC) Request:
+##### Spatiotemporal Claim(SC) Request:
 
 <span style="color:red;">[user-centric location privacy model: update scheduling and witness scheduling]</span>
 
-The Prover periodically generates Presence Claim request and sends them to nearby witnesses:
+The Prover periodically generates Spatiotemporal Claim request and sends them to nearby witnesses:
 
 ![image-20230420142016355](./assets/image-20230420142016355.png)
 
@@ -72,16 +72,16 @@ Our 3 way communication (instead of classic 4 way for infrastructure dependent a
 
 > <span style="color:red;">Define Server = Oracle here</span>
 
-1. Prover broadcast Presence Claim request with following datas to witness:
+1. Prover broadcast Spatiotemporal Claim request with following datas to witness:
    - Request = {Pseu~prov~ | Nonce~prov~ | Range | Location | Time}
 
-2. When Witness receives the request and send the PC to the prover:
+2. When Witness receives the request and send the SC to the prover:
    - M = Request | time | Range | Location
    - Proof = E~serv~{ Pseu~Witt~ | M | S~Witness~(M)}
 
-3. The Prover forward PC(s) to Server
+3. The Prover forward SC(s) to Server
 
-   > A PC contains all the necessary time information, including the time when the request was created and when the witness signed the PC. Additionally, the server takes the timestamp into account when receiving the PC. This prevents replay attacks or a Prover from holding onto a signed PC for an extended period in order to "store" their location for future use.
+   > A SC contains all the necessary time information, including the time when the request was created and when the witness signed the SC. Additionally, the server takes the timestamp into account when receiving the SC. This prevents replay attacks or a Prover from holding onto a signed SC for an extended period in order to "store" their location for future use.
 
    - Server will store the location based on the location the witness guessed, the more the number of Proof, the more credible and accurate the location.
      - Short range bluetooth: inside 10m
@@ -159,7 +159,7 @@ There are some variables related to this location proof, which are shown to the 
 ##### Noteworthy Summary (Future Study)
 
 It should be noted here that the verification methods behind PoW and P2P are different. Traditional PoW can "letting the blockchain compute" because all verifiers only need to consume constant time to verify the result, and all blockchains can use the mining pool to reduce repeated calculations and improve sloving problematic efficiency.
-But P2P cannot do this, because the paper does not provide a method similar to verifying the hash value to confidently verify the Present claim between two nodes.
+But P2P cannot do this, because the paper does not provide a method similar to verifying the hash value to confidently verify the Spatiotemporal Claim between two nodes.
 
 I think there is only one possibility to make this issue reasonable (but this part is not mentioned in the paper), that is to find a mathematical way to let other nodes confidently verify the betweenness result under logtime calculated by a certain node. (In other words, a real parallel calculation support efficient self-proof)
 
@@ -228,7 +228,7 @@ In the problem of decentralized PoL, we define the certainty of a location proof
 
 **Convert Ranking to %**:
 
-If we aim to define Location Proof Centrality (as a percentage) based solely on the Betweenness Centrality that Percent Claim possesses, this would result in a definition of Location Proof that is equivalent to the amount of influence a PC has over the flow of information in a graph within the context of betweenness. This calculation, however, does not yield or reveal any new information, as it is merely a conversion that changes the representation of betweenness from a value to a percentage. Nevertheless, we will provide some examples to demonstrate the conversion process, and this could be extended to summarize the Location Proof Centrality (as a percentage) based on more available data.
+If we aim to define Location Proof Centrality (as a percentage) based solely on the Betweenness Centrality that Percent Claim possesses, this would result in a definition of Location Proof that is equivalent to the amount of influence a SC has over the flow of information in a graph within the context of betweenness. This calculation, however, does not yield or reveal any new information, as it is merely a conversion that changes the representation of betweenness from a value to a percentage. Nevertheless, we will provide some examples to demonstrate the conversion process, and this could be extended to summarize the Location Proof Centrality (as a percentage) based on more available data.
 
 - In [13_APPLAUS], the conversion or normalization is defined by dividing the maximum possible number of shortest paths that could pass through any node in the network (B(v) = $\sum_{s\neq v \neq t} \frac{\sigma_{st}(v)}{\sigma_{st}}$). The efficiency of this normalization depends on the network's size and structure. As a result, the complexity of calcuate this denominator will be O(n^3) if we are using the Floyd-Warshall algorithm, and the problem appears to be intractable within logarithmic time.
 
@@ -274,7 +274,7 @@ Clustering-based approaches involve grouping data points with similar characteri
 
 Compared to connectivity-based approaches like betweenness centrality, the approximations obtained through clustering-based methods might be more meaningful due to their focus on the inherent structure of the data. While betweenness centrality measures the influence of a node within a network based on the flow of information, clustering-based approaches capture the similarity of data points, making them more applicable to a wider range of problems.
 
-- Spectral clustering: This method utilizes the spectrum (eigenvalues) of the similarity matrix of the dataset to perform dimensionality reduction before clustering the data points in a lower-dimensional space. One example of spectral clustering is a 3D spectral embedding, where the XY plane represents the present claim location, and the Z axis represents time. The benefits of this type of clustering include embedding all the information within a unified space, making it easier to visualize and analyze the relationships between data points. Every node should have a continuous path during continuous time, reflecting the temporal aspect of the data.
+- Spectral clustering: This method utilizes the spectrum (eigenvalues) of the similarity matrix of the dataset to perform dimensionality reduction before clustering the data points in a lower-dimensional space. One example of spectral clustering is a 3D spectral embedding, where the XY plane represents the Spatiotemporal Claim location, and the Z axis represents time. The benefits of this type of clustering include embedding all the information within a unified space, making it easier to visualize and analyze the relationships between data points. Every node should have a continuous path during continuous time, reflecting the temporal aspect of the data.
 
   When calculating the clustering data, we can also apply techniques from Paper08 to help detect outliers. By incorporating [8_CLIP_Continuous_Location_Integrity_and_Provenance_for_Mobile_Phones], the spectral clustering approach can better identify anomalous patterns or data points within the 3D space that do not fit well with the rest of the dataset. This combination of clustering and outlier detection methods allows for a more comprehensive analysis of the data, taking into account both spatial and temporal dimensions.
 
